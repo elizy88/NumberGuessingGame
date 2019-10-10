@@ -1,15 +1,8 @@
 
 import React from 'react';
 import Timer from './Timer';
-//import './main.scss'
 import './number.css'
 import UserMinAndMax from './UserMinAndMax';
-const getInitialState = () => ({
-  status: 0,
-   guess: 0
-});
-
-
 class App extends React.Component {
   constructor() {
     super();
@@ -22,8 +15,8 @@ class App extends React.Component {
       userMin: '',
       userMax: '',
       error: null,
-      try: 0,
       counter: 1,
+
       
     };
   }
@@ -70,53 +63,64 @@ class App extends React.Component {
   }
 
   handleResetClick() {
+
     this.setState({
       guessInput: '',
       guess: '',
       randomNumber: this.generateRandomNumber(),
       message: '',
       min: 0,
-      max: 10
-    });
-  }
-
+      max: 10,
+     
+    } )  
+    window.location.reload(false)    
+      };
+    
+   
+  
   displayMessage() {
     let userGuess = parseInt(this.state.guessInput);
     let min = this.state.min;
     let max = this.state.max;
 
     if ( userGuess > max || userGuess < min) {
+      const mes=`value must be between ${this.state.min} and ${this.state.max}`
       this.setState({
-        message: 'Guess a number between ' + min + ' and ' + max,
+        message:mes,
         counter:this.state.counter + 1
       });
     }
     else if ( userGuess === this.state.randomNumber ) {
-      this.setState({
-        message: 'You Won!'+ ' '+ 'in' +' '+ this.state.counter + ' ' + 'Attempt/s',
-        min: min -= 10,
-        max: max += 10,
-      
-      randomNumber: this.generateRandomNumber(min, max)
-
-      });
-      
+     const mess= `YOU WON! In ${this.state.counter} Attempts in ${this.refs.child.timecounter} seconds`
      
+      this.setState({
+        message: mess,
+        min: min = 0,
+        max: max = 10,
+        time:clearInterval(this.refs.child.timer),
+       
+      })
       
-    } else if ( userGuess > this.state.randomNumber ) {
+      
+      }        
+           
+     else if ( userGuess > this.state.randomNumber ) {
+      const mess=`TOO HIGH.TRY AGAIN: ${this.state.counter}`
       this.setState ({
-        message: 'Too high. Try again:' + ' ' + this.state.counter,
+        message:mess,
         
         
       });
     } else {
+      const mess=`TOO LOW,TRY AGAIN: ${this.state.counter}`
       this.setState ({
      
-        message: 'Too low. Try again' + ':' + ' ' + this.state.counter,
+        message:mess,
        
       });
     }
   }
+
 
   disableRangeButton() {
     if ( this.state.userMin === '' || this.state.userMax === '' ) {
@@ -127,14 +131,13 @@ class App extends React.Component {
   }
 
   render() {
-
-    return (
+        return(
       <main className='container'>
          <section className='custom-max-min'>
         <input
           className='guess'
           type='text'
-          value='Number Guessing Game'/>
+          value='Number Guessing Game' readOnly/>
        
         <Timer ref="child"/>
             
@@ -191,7 +194,7 @@ class App extends React.Component {
             <button
               className="ResetButton"
               onClick={this.handleResetClick.bind(this)}
-              disabled={this.state.min === 0 ? true : false}>
+              >
               Reset
             </button>
           </section>

@@ -13,12 +13,8 @@ class Timer extends React.Component {
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this)
     }
-    secondsToTime(secs){
-      //let hours = Math.floor(secs / (60 * 60));
-  
-      let divisor_for_minutes = secs % (60 * 60);
-      //let minutes = Math.floor(divisor_for_minutes / 60);
-  
+    secondsToTime(secs){   
+      let divisor_for_minutes = secs % (60 * 60); 
       let divisor_for_seconds = divisor_for_minutes % 60;
       let seconds = Math.ceil(divisor_for_seconds);
   
@@ -48,27 +44,30 @@ class Timer extends React.Component {
     countDown() {
  
       let seconds = this.state.seconds - 1;
+      this.timecounter+=1
       this.setState({
         time: this.secondsToTime(seconds),
         seconds: seconds,
       });
       
       //give warning for time shot
-      if (seconds === 5) { 
-           alert('you are left with 5seconds!')
+      //if (seconds === 5) { 
+        if(this.timecounter===25){
+           alert('you are left with 5 seconds!')
       }
-      // Check if we're time is.
+//checking if we are running out of time
       if (seconds === 0) { 
         clearInterval(this.timer);
-            alert('Sorry,Game Over!')
-      
+            //alert('Sorry,Game Over!')
+      return
       }
     }
      render() {
       if (this.state.seconds === 0) { 
         clearInterval(this.timer);
+
        return(<div style={{textAlign:"center"}}>
-       <h1 style={{ color: "green" }}>Game over!</h1>
+       <h1 style={{ color: "blue" }}>Game over!</h1>
      <button onClick={this.resetGame} >New Game</button>
      </div>
      )}
@@ -76,10 +75,11 @@ class Timer extends React.Component {
       return(
         <div>
          
- <p style={{color:'red',}}> Remaining Time :{this.state.time.sec}</p>
+ <p style={{color:'red'}}> Remaining Time :{this.state.time.sec}</p>
                 </div>
       );
     }
   }
 
   export default Timer
+  
