@@ -82,16 +82,19 @@ class App extends React.Component {
     let userGuess = parseInt(this.state.guessInput);
     let min = this.state.min;
     let max = this.state.max;
+    
 
     if ( userGuess > max || userGuess < min) {
-      const mes=`value must be between ${this.state.min} and ${this.state.max}`
+      const mes=`value must be between ${this.state.min} and ${this.state.max} `
       this.setState({
-        message:mes,
+        message1:mes,
         counter:this.state.counter + 1
       });
     }
     else if ( userGuess === this.state.randomNumber ) {
-     const mess= `YOU WON! In ${this.state.counter} Attempts in ${this.refs.child.timecounter} seconds`
+     const mess= `YOU WON! In ${this.state.counter} Attempts in
+      ${this.refs.child.timecounter} seconds!!!`
+     
      
       this.setState({
         message: mess,
@@ -105,14 +108,14 @@ class App extends React.Component {
       }        
            
      else if ( userGuess > this.state.randomNumber ) {
-      const mess=`TOO HIGH.TRY AGAIN: ${this.state.counter}`
+      const mess=`Too High.Try Again: ${this.state.counter}`
       this.setState ({
         message:mess,
         
         
       });
     } else {
-      const mess=`TOO LOW,TRY AGAIN: ${this.state.counter}`
+      const mess=`Too Low,Try Again: ${this.state.counter}`
       this.setState ({
      
         message:mess,
@@ -159,9 +162,10 @@ class App extends React.Component {
             {this.state.guess}
           </h4>
 
-          <h5 className='message-text'>
+          <div className='message-text'>
             {this.state.message}
-          </h5>
+            
+          </div>
         </div>
 
         <div className='left-container'>

@@ -63,5 +63,10 @@ input[type=text] {
 .buttons{
   margin-right:5px; 
 }
-
+.message-text{
+  color:rgb(226, 43, 171);
+  font-family:Georgia;
+  font-size:large
+  
+}
 
