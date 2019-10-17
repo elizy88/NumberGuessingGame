@@ -16,12 +16,7 @@ class App extends React.Component {
       error: null,
       counter: 1,
 
-<<<<<<< HEAD
           };
-=======
-      
-    };
->>>>>>> 462f1a994de2572d5395c6a9698227b6f9a71fc8
   }
 
   generateRandomNumber(min = 0, max = 10) {
@@ -157,12 +152,10 @@ class App extends React.Component {
               value={this.handleRangeInput.bind(this)}
               disabled={this.disableRangeButton()}
              />
-  
-            <h5 className='last-guess-text'>
+              <h5 className='last-guess-text'>
               Your last guess was:<br />
             </h5>
-  
-            <h4 className='number-guess'>
+              <h4 className='number-guess'>
               {this.state.guess}
             </h4>
   
