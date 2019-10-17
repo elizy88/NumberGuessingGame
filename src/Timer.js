@@ -1,5 +1,4 @@
 import React from 'react'
-//import ReactDOM from 'react-dom'
 const getInitialState = () => ({
   time:{},
   seconds:30
@@ -14,11 +13,8 @@ class Timer extends React.Component {
     this.countDown = this.countDown.bind(this)
     }
     secondsToTime(secs){
-      //let hours = Math.floor(secs / (60 * 60));
-  
-      let divisor_for_minutes = secs % (60 * 60);
-      //let minutes = Math.floor(divisor_for_minutes / 60);
-  
+ 
+      let divisor_for_minutes = secs % (60 * 60); 
       let divisor_for_seconds = divisor_for_minutes % 60;
       let seconds = Math.ceil(divisor_for_seconds);
   
@@ -40,14 +36,14 @@ class Timer extends React.Component {
       }
     }
     resetGame = () => {
-     
-      this.setState(getInitialState());
+      // this.setState(getInitialState());
       window.location.reload(false);
   };
   
     countDown() {
  
       let seconds = this.state.seconds - 1;
+      this.timecounter+=1
       this.setState({
         time: this.secondsToTime(seconds),
         seconds: seconds,
@@ -59,8 +55,8 @@ class Timer extends React.Component {
       }
       // Check if we're time is.
       if (seconds === 0) { 
-        clearInterval(this.timer);
-            alert('Sorry,Game Over!')
+       //clearInterval(this.timer);
+           // alert('Sorry,Game Over!')
       
       }
     }
@@ -68,8 +64,8 @@ class Timer extends React.Component {
       if (this.state.seconds === 0) { 
         clearInterval(this.timer);
        return(<div style={{textAlign:"center"}}>
-       <h1 style={{ color: "green" }}>Game over!</h1>
-     <button onClick={this.resetGame} >New Game</button>
+       <h1 style={{ color: "red" }}>Game over!</h1>
+     <button className="buttonreset" onClick={this.resetGame} >New Game</button>
      </div>
      )}
       

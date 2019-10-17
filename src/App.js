@@ -1,15 +1,7 @@
-
 import React from 'react';
 import Timer from './Timer';
-//import './main.scss'
 import './number.css'
 import UserMinAndMax from './UserMinAndMax';
-const getInitialState = () => ({
-  status: 0,
-   guess: 0
-});
-
-
 class App extends React.Component {
   constructor() {
     super();
@@ -22,14 +14,14 @@ class App extends React.Component {
       userMin: '',
       userMax: '',
       error: null,
-      try: 0,
       counter: 1,
-      
-    };
+
+          };
   }
 
   generateRandomNumber(min = 0, max = 10) {
     return Math.floor(Math.random() * (max - min) + min);
+    
   }
 
   componentDidMount() {
@@ -43,20 +35,24 @@ class App extends React.Component {
   handleRangeInput(e) {
     let { name, value } = e.target;
     this.setState({ [name]: parseInt(value) });
+    console.log(name, value);
   }
 
-  handleRangeClick () {
+  handleRangeClick = e => {
+    e.preventDefault();
     this.setState({
       min: this.state.userMin,
       max: this.state.userMax,
-      userMax: '',
-      userMin: '',
+      //userMax: '',
+      //userMin: '',
       randomNumber: this.generateRandomNumber(this.state.userMin, this.state.userMax)
-    });
-  }
-
-  handleGuessClick() {
-    this.refs.child.startTimer();
+    },() =>{
+      this.refs.child.startTimer(); 
+  });
+}//() => {
+      // start the game once you have your random number!
+      handleGuessClick() {
+    
     this.setState({
       guess: parseInt(this.state.guessInput),
       counter:this.state.counter + 1,
@@ -70,138 +66,148 @@ class App extends React.Component {
   }
 
   handleResetClick() {
+
     this.setState({
       guessInput: '',
       guess: '',
       randomNumber: this.generateRandomNumber(),
       message: '',
       min: 0,
-      max: 10
-    });
-  }
-
-  displayMessage() {
-    let userGuess = parseInt(this.state.guessInput);
-    let min = this.state.min;
-    let max = this.state.max;
-
-    if ( userGuess > max || userGuess < min) {
-      this.setState({
-        message: 'Guess a number between ' + min + ' and ' + max,
-        counter:this.state.counter + 1
-      });
-    }
-    else if ( userGuess === this.state.randomNumber ) {
-      this.setState({
-        message: 'You Won!'+ ' '+ 'in' +' '+ this.state.counter + ' ' + 'Attempt/s',
-        min: min -= 10,
-        max: max += 10,
-      
-      randomNumber: this.generateRandomNumber(min, max)
-
-      });
-      
+      max: 10,
      
-      
-    } else if ( userGuess > this.state.randomNumber ) {
-      this.setState ({
-        message: 'Too high. Try again:' + ' ' + this.state.counter,
+    } )  
+    window.location.reload(false)    
+      };
+    displayMessage() {
+      let userGuess = parseInt(this.state.guessInput);
+     let min = this.state.min;
+      let max = this.state.max;
+     
+      if ( userGuess > max || userGuess < min) {
+        const mes=`value must be between ${this.state.min} and ${this.state.max} `
+        this.setState({
+          message:mes,
+          counter:this.state.counter + 1
+        });
+      }
+      else if ( userGuess === this.state.randomNumber ) {
+       const mes= `YOU WON! In ${this.state.counter} Attempts in
+        ${this.refs.child.timecounter} seconds!!!`
+        console.log('CLEAR int: ', this.refs.child.timer);
+       
+        this.setState({
+          message: mes,
+          min: min = 0,
+          max: max = 10,
+          time:clearInterval(this.refs.child.timer),
+         
+        })
         
         
-      });
-    } else {
-      this.setState ({
-     
-        message: 'Too low. Try again' + ':' + ' ' + this.state.counter,
+        }        
+             
+       else if ( userGuess > this.state.randomNumber ) {
+        const mes=`Too High.Try Again: ${this.state.counter}`
+        this.setState ({
+          message:mes,
+          
+          
+        });
+      } else {
+        const mes=`Too Low,Try Again: ${this.state.counter}`
+        this.setState ({
        
-      });
+          message:mes,
+         
+        });
+      }
     }
-  }
-
-  disableRangeButton() {
-    if ( this.state.userMin === '' || this.state.userMax === '' ) {
-      return true
-    } else {
-      return false
+  
+  
+    disableRangeButton() {
+      if ( this.state.userMin === '' || this.state.userMax === '' ) {
+        return true
+      } else {
+        return false
+      }
     }
-  }
-
-  render() {
-
-    return (
-      <main className='container'>
-         <section className='custom-max-min'>
-        <input
-          className='guess'
-          type='text'
-          value='Number Guessing Game'/>
-       
-        <Timer ref="child"/>
-            
-        <div className='right-container'>
-          <UserMinAndMax
-            userMin={this.state.UserMin}
-            userMax={this.state.UserMax}
-            handleRangeInput={this.handleRangeInput.bind(this)}
-            handleRangeClick={this.handleRangeClick.bind(this)}
-            value={this.handleRangeInput.bind(this)}
-            disabled={this.disableRangeButton()}
-           />
-
-          <h5 className='last-guess-text'>
-            Your last guess was:<br />
-          </h5>
-
-          <h4 className='number-guess'>
-            {this.state.guess}
-          </h4>
-
-          <h5 className='message-text'>
-            {this.state.message}
-          </h5>
-        </div>
-
-        <div className='left-container'>
-         <h4 className='min-max-text'>
-           Guess a number between {this.state.min} and {this.state.max}
-         </h4>
-
+  
+    render() {
+          return(
+        <main className='container'>
+           <section className='custom-max-min'>
           <input
-            type='number'
-            className='guess-input-field'
-            value={this.state.guessInput}
-            onChange={this.handleUserInput.bind(this)}
-            placeholder="Your best guess" />
-<br/><br/>
-          <section className='buttons'>
-            <button
-              className="GuessButton"
-              onClick={this.handleGuessClick.bind(this)}
-              disabled={this.state.guessInput === '' ? true : false}>
-              Guess
-            </button>
-
-            <button
-              className="ClearButton"
-              onClick={this.handleClearClick.bind(this)}
-              disabled={this.state.guessInput === '' ? true : false}>
-              Clear
-            </button>
-
-            <button
-              className="ResetButton"
-              onClick={this.handleResetClick.bind(this)}
-              disabled={this.state.min === 0 ? true : false}>
-              Reset
-            </button>
-          </section>
-        </div>
-      
-      </section>
-      </main>
-    )
+            className='guess'
+            type='text'
+            value='Number Guessing Game' readOnly/>
+         
+          <Timer ref="child"/>
+              
+          <div className='right-container'>
+            <UserMinAndMax
+              userMin={this.state.UserMin}
+              userMax={this.state.UserMax}
+              handleRangeInput={this.handleRangeInput.bind(this)}
+              handleRangeClick={this.handleRangeClick.bind(this)}
+              value={this.handleRangeInput.bind(this)}
+              disabled={this.disableRangeButton()}
+             />
+  
+            <h5 className='last-guess-text'>
+              Your last guess was:<br />
+            </h5>
+  
+            <h4 className='number-guess'>
+              {this.state.guess}
+            </h4>
+  
+            <div className='message-text'>
+              {this.state.message}
+              
+            </div>
+          </div>
+  
+          <div className='left-container'>
+           <h4 className='min-max-text'>
+             Guess a number between {this.state.min} and {this.state.max}
+           </h4>
+  
+            <input
+              type='number'
+              className='guess-input-field'
+              value={this.state.guessInput}
+              onChange={this.handleUserInput.bind(this)}
+              placeholder="Your best guess" />
+  <br/><br/>
+            <section className='buttons'>
+              <button
+                className="GuessButton"
+                onClick={this.handleGuessClick.bind(this)}
+                disabled={this.state.guessInput === '' ? true : false}>
+                Guess
+              </button>
+  
+              <button
+                className="ClearButton"
+                onClick={this.handleClearClick.bind(this)}
+                disabled={this.state.guessInput === '' ? true : false}>
+                Clear
+              </button>
+  
+              <button
+                className="ResetButton"
+                onClick={this.handleResetClick.bind(this)}
+                >
+                Reset
+              </button>
+            </section>
+          </div>
+        
+        </section>
+        </main>
+      )
+    }
+  
   }
-
-}
-
-export default App
+  
+  export default App

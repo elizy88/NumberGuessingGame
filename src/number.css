@@ -4,7 +4,7 @@
   background-color: #f2f2f2;
   padding: 80px;
   width:400px;
-  height:450px;
+  height:500px;
   padding: 12px;
   border: 2px solid #ccc;
   border-radius: 4px;
@@ -63,5 +63,15 @@ input[type=text] {
 .buttons{
   margin-right:5px; 
 }
+.buttonreset{
+  color: brown;
+}
+.message-text{
+  color:rgb(226, 43, 171);
+  font-family:Georgia;
+  font-size:large
+  
+}
+
 
 
