@@ -1,7 +1,8 @@
 
 import React  from 'react'
 import './number.css'
-const UserMinAndMax = ({ handleRangeInput, handleRangeClick }) => {
+const UserMinAndMax = props => { 
+//const UserMinAndMax = ({ handleRangeInput, handleRangeClick }) => {
 
   return (
     <section >
@@ -10,7 +11,7 @@ const UserMinAndMax = ({ handleRangeInput, handleRangeClick }) => {
         type='number'
           placeholder='min'
         name='userMin'
-        onChange={handleRangeInput}
+        onChange={e=>props.handleRangeInput(e)}
         />
          
        <input
@@ -18,11 +19,11 @@ const UserMinAndMax = ({ handleRangeInput, handleRangeClick }) => {
         type='number'
         placeholder='max'
         name='userMax'
-        onChange={handleRangeInput}
+        onChange={e=>props.handleRangeInput(e)}
         />  <br/><br/>
       <button
         className='submit-max-min-button'
-        onClick={handleRangeClick}
+        onClick={e=>props.handleRangeClick(e)}
     
         >
         Submit

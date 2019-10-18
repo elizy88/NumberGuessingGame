@@ -16,12 +16,7 @@ class App extends React.Component {
       error: null,
       counter: 1,
 
-<<<<<<< HEAD
           };
-=======
-      
-    };
->>>>>>> 462f1a994de2572d5395c6a9698227b6f9a71fc8
   }
 
   generateRandomNumber(min = 0, max = 10) {
@@ -39,8 +34,9 @@ class App extends React.Component {
 
   handleRangeInput(e) {
     let { name, value } = e.target;
-    this.setState({ [name]: parseInt(value) });
     console.log(name, value);
+    this.setState({ [name]: parseInt(value) });
+    
   }
 
   handleRangeClick = e => {
@@ -152,17 +148,20 @@ class App extends React.Component {
             <UserMinAndMax
               userMin={this.state.UserMin}
               userMax={this.state.UserMax}
-              handleRangeInput={this.handleRangeInput.bind(this)}
+              //handleRangeInput={this.handleRangeInput.bind(this)}
               handleRangeClick={this.handleRangeClick.bind(this)}
               value={this.handleRangeInput.bind(this)}
-              disabled={this.disableRangeButton()}
+              handleRangeInput={this.handleRangeInput.bind(this)}
+             // disabled={this.disableRangeButton()}
+
+
+
+            
              />
-  
-            <h5 className='last-guess-text'>
+              <h5 className='last-guess-text'>
               Your last guess was:<br />
             </h5>
-  
-            <h4 className='number-guess'>
+              <h4 className='number-guess'>
               {this.state.guess}
             </h4>
   
@@ -174,7 +173,7 @@ class App extends React.Component {
   
           <div className='left-container'>
            <h4 className='min-max-text'>
-             Guess a number between {this.state.min} and {this.state.max}
+             Guess a number between {this.state.userMin} and {this.state.userMax}
            </h4>
   
             <input

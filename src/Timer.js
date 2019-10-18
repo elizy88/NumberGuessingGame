@@ -8,7 +8,7 @@ class Timer extends React.Component {
       super();
     this.state = getInitialState();
     this.timer = 0;
-    this.timecounter=0;
+    this.timecounter = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this)
     }
@@ -33,6 +33,7 @@ class Timer extends React.Component {
     startTimer() {
       if (this.timer === 0 && this.state.seconds > 0) {
         this.timer = setInterval(this.countDown, 1000);
+        console.log('start int: ', this.timer);
       }
     }
     resetGame = () => {
@@ -43,7 +44,7 @@ class Timer extends React.Component {
     countDown(){
  
       let seconds = this.state.seconds - 1;
-      this.timecounter+=1
+      this.timecounter += 1
       this.setState({
         time: this.secondsToTime(seconds),
         seconds: seconds,
@@ -56,20 +57,24 @@ class Timer extends React.Component {
       }
 //checking if we are running out of time
       if (seconds === 0) { 
-       //clearInterval(this.timer);
+       clearInterval(this.timer);
            // alert('Sorry,Game Over!')
       
       }
     }
      render() {
-      if (this.state.seconds === 0) { 
+      if (this.state.seconds === 0) {
+        console.log('clear int: ', this.timer);
         clearInterval(this.timer);
 
        return(<div style={{textAlign:"center"}}>
-       <h1 style={{ color: "blue" }}>Game over!</h1>
+       <h1 style={{ color: "red" }}>Game over!</h1>
      <button onClick={this.resetGame} >New Game</button>
+    
      </div>
-     )}
+   
+     )
+    }
       
       return(
         <div>
