@@ -32,20 +32,6 @@ class App extends React.Component {
     });
   }
 
-  winUpdater = () => {
-    this.setState({
-      win: true,
-      stop: true
-    });
-  }
-
-  winUpdater = () => {
-    this.setState({
-      win: true,
-      stop: true
-    });
-  }
-
   componentDidMount() {
     this.setState({ randomNumber: this.generateRandomNumber() });
   }
